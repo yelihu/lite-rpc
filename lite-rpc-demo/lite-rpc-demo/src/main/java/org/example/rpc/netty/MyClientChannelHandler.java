@@ -1,11 +1,8 @@
 package org.example.rpc.netty;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * 数据读取进来之后如何处理
@@ -15,13 +12,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @author yelihu
  */
 @Slf4j
-public class MyChannelHandler extends ChannelInboundHandlerAdapter {
+public class MyClientChannelHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf buf = (ByteBuf) msg;
-        log.info("server receive data = {}, will sending response", buf.toString(UTF_8));
-
-        ctx.channel().writeAndFlush("hello client, this is server!");
+        log.info("server receive data from server = {}", msg);
     }
 
     @Override
