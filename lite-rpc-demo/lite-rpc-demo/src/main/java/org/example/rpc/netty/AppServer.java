@@ -9,6 +9,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import static org.example.rpc.common.PortConst._8080;
+
 /**
  * 测试DEMO - 客户端代码
  *
@@ -24,7 +26,7 @@ public class AppServer {
     private final int port;
 
     public static void main(String[] args) {
-        new AppServer(8080).start();
+        new AppServer(_8080).start();
     }
 
     public void start() {
@@ -39,8 +41,7 @@ public class AppServer {
                     //childHandler定义了处理请求应该如何做
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
-                            //receive data and print log
+                        protected void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast(new MyChannelHandler());
                         }
                     });

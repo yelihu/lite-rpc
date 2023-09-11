@@ -5,6 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
+import org.example.rpc.common.ByteConverter;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -22,7 +23,9 @@ public class MyChannelHandler extends ChannelInboundHandlerAdapter {
         ByteBuf buf = (ByteBuf) msg;
         log.info("server receive data = {}, will sending response", buf.toString(UTF_8));
 
-        ctx.channel().writeAndFlush(Unpooled.copiedBuffer("hello client, this is server!".getBytes(UTF_8)));
+        ByteBuf msg1 = Unpooled.copiedBuffer(ByteConverter.toUTF8("hello client, this is server!"));
+
+        ctx.channel().writeAndFlush(msg1);
     }
 
     @Override
