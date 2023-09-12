@@ -23,6 +23,18 @@ Lite-RPC项目主要包含以下模块和文件：
 5. `plugins`：插件模块，提供可扩展的插件机制。
 6. `docs`：包含一些相关的文档和教程，用于学习和理解RPC框架和分布式相关的知识。
 
+## 文档
+
+### 知识文档
+
+1. [1_基本知识.md](doc%2F1_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86.md)
+2. [2_Netty入门.md](doc%2F2_Netty%E5%85%A5%E9%97%A8.md)
+3. [3_报文协议设计.md](doc%2F3_%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AE%E8%AE%BE%E8%AE%A1.md)
+4. [4_Zookeeper基本概念.md](doc%2F4_Zookeeper%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.md)
+
+### 用户手册
+
+
 ## 使用方法
 
 1. 克隆Lite-RPC项目到本地：
