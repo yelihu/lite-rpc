@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
+ * convert string to bytes using UTF-8 encoding
+ *
  * @author yelihu
  */
 public abstract class ByteConverter {

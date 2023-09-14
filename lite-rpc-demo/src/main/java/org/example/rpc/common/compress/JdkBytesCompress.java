@@ -23,7 +23,7 @@ public class JdkBytesCompress implements BytesCompress {
     public byte[] compress(byte[] uncompressed) throws IOException {
         checkByteArraySize(uncompressed);
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-             //装饰一个zip输出流
+             //decorate the stream with a GZIPOutputStream
              GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outputStream);) {
 
             gzipOutputStream.write(uncompressed);

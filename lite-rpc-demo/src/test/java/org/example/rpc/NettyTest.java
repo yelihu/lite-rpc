@@ -6,7 +6,7 @@ import io.netty.buffer.CompositeByteBuf;
 import io.netty.buffer.Unpooled;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.example.rpc.common.ObjectSerializeUtils;
+import org.example.rpc.common.ObjectSerializer;
 import org.example.rpc.common.compress.JdkBytesCompress;
 import org.junit.jupiter.api.Test;
 
@@ -65,7 +65,7 @@ public class NettyTest {
 
         User jacky = new User(10000001L, "jacky", 23);
 
-        byteBuf.writeBytes(ObjectSerializeUtils.toByteArray(jacky));
+        byteBuf.writeBytes(ObjectSerializer.toByteArray(jacky));
         return byteBuf;
     }
 

@@ -10,7 +10,7 @@
     <name>lite-rpc</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>lite-rpc-demo/lite-rpc-demo</module>
+        <module>lite-rpc-demo</module>
     </modules>
 
     <properties>
@@ -25,10 +25,17 @@
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <junit.version>4.13.2</junit.version>
         <netty-all.version>4.1.90.Final</netty-all.version>
+        <zookeeper.version>3.8.1</zookeeper.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
