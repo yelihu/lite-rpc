@@ -1,5 +1,7 @@
 # Zookeeper安装和Java客户端调试
 
+[参考链接](https://www.xjx100.cn/news/20558.html?action=onClick)
+
 ## Docker 安装Zookeeper
 
 必须条件，Mac系统本地安装完毕docker，可以docker search查看一下版本，但是本文档不安装latest版本的Zookeeper
@@ -156,3 +158,8 @@ public class ZooKeeperTest {
     }
 }
 ```
+
+## Zookeeper 集群安装
+
+参考👇🏻:
+[6_使用Docker在Mac上搭建Zookeeper集群.md](6_%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Mac%E4%B8%8A%E6%90%AD%E5%BB%BAZookeeper%E9%9B%86%E7%BE%A4.md)
