@@ -4,7 +4,8 @@ Lite-RPC是一个简单的RPC框架，使用Java语言实现。该框架的目�
 
 ## 功能
 
-Lite-RPC框架提供以下功能：
+Lite
+-RPC框架提供以下功能：
 
 - 实现基本的RPC通信机制，支持远程过程调用。
 - 支持服务注册和发现，使客户端能够动态获取可用的服务。
@@ -27,10 +28,17 @@ Lite-RPC项目主要包含以下模块和文件：
 
 ### 知识文档
 
-1. [1_基本知识.md](doc%2F1_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86.md)
-2. [2_Netty入门.md](doc%2F2_Netty%E5%85%A5%E9%97%A8.md)
-3. [3_报文协议设计.md](doc%2F3_%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AE%E8%AE%BE%E8%AE%A1.md)
-4. [4_Zookeeper基本概念.md](doc%2F4_Zookeeper%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.md)
+**铺垫知识内容**
+
+* [1_基本知识.md](doc%2F1_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86.md)
+* [2_Netty入门.md](doc%2F2_Netty%E5%85%A5%E9%97%A8.md)
+* [3_报文协议设计.md](doc%2F3_%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AE%E8%AE%BE%E8%AE%A1.md)
+
+**Zookeeper相关内容**
+
+* [4_Zookeeper基本概念.md](doc%2F4_Zookeeper%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.md)
+* [5_在Mac环境的docker安装ZooKeeper.md](doc%2F5_%E5%9C%A8Mac%E7%8E%AF%E5%A2%83%E7%9A%84docker%E5%AE%89%E8%A3%85ZooKeeper.md)
+* [6_使用Docker在Mac上搭建Zookeeper集群.md](doc%2F6_%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Mac%E4%B8%8A%E6%90%AD%E5%BB%BAZookeeper%E9%9B%86%E7%BE%A4.md)
 
 ### 用户手册
 

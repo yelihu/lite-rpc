@@ -159,11 +159,12 @@ Mode: leader
 1. 集群部署注意修改配置，IP地址和配置文件中的节点IP地址关系密切；myid和server.?当中?的数字关系密切，并且要标注clientPort
 2. ./bin/zkServer.sh status 命令会说明当前节点是leader还是follower。
 
+## 参考资料
 
-
-
-
-
+1. [Zookeeper：Mac通过Docker安装Zookeeper集群](https://www.xjx100.cn/news/20558.html?action=onClick)
+2. [Exception while listening... 报错解决](https://blog.csdn.net/u012580143/article/details/84136871)
+3. [Client port not found in static config file. Looking in dynamic config 报错解决](https://blog.csdn.net/Java_HuiLong/article/details/110383191)
+4. [clientPort和";x"指定客户端port的问题](https://zhuanlan.zhihu.com/p/570110759)
 
 
 
