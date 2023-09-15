@@ -154,10 +154,43 @@ Mode: leader
 
 这是一个leader节点
 
+## 测试和验证
+
+```java
+private static final String CONNECT_CLUSTER_STRING="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183";
+private static final int SESSION_TIMEOUT_MILL_SEC=3000;
+private static final byte[]DATA_BYTES="hello".getBytes();
+
+@Test
+public void testNode(){
+        String result=null;
+        try(ZooKeeper zooKeeper=new ZooKeeper(CONNECT_CLUSTER_STRING,SESSION_TIMEOUT_MILL_SEC,null)){
+        result=zooKeeper.create("/lite-rpc",DATA_BYTES,ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT);
+
+        System.out.println(result);
+        }catch(InterruptedException|IOException|KeeperException e){
+        throw new RuntimeException(e);
+        }
+        }
+```
+
+编写测试代码如上，单测通过并输出了result。
+
+随意挑选一个实例，比如zk1、zk2，执行如下命令和ls /，均能看到刚刚创建的持久节点/lite-rpc
+
+```
+docker exec -it zk2 zkCli.sh
+
+ls /
+```
+
+**至此，使用Docker在Mac上搭建Zookeeper集群任务结束！**
+
 ## 总结
 
-1. 集群部署注意修改配置，IP地址和配置文件中的节点IP地址关系密切；myid和server.?当中?的数字关系密切，并且要标注clientPort
+1. 集群部署注意修改配置，IP地址和配置文件中的节点IP地址关系密切；myid和server.?当中?的数字关系密切，并且要标注clientPort（注意新老版本zookeeper的写法差异）。
 2. ./bin/zkServer.sh status 命令会说明当前节点是leader还是follower。
+3. ZooKeeper的Java API在连接集群的时候，集群IP使用”,”分割的，不要写成”;“。
 
 ## 参考资料
 
