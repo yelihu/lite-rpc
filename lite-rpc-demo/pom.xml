@@ -9,10 +9,15 @@
     </parent>
 
     <artifactId>lite-rpc-demo</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>lite-rpc-demo</name>
     <url>http://maven.apache.org</url>
+    <modules>
+        <module>lite-rpc-demo-client</module>
+        <module>lite-rpc-demo-server</module>
+        <module>lite-rpc-demo-api</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
