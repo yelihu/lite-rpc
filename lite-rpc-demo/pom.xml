@@ -14,8 +14,8 @@
     <name>lite-rpc-demo</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>lite-rpc-demo-client</module>
-        <module>lite-rpc-demo-server</module>
+        <module>lite-rpc-demo-consumer</module>
+        <module>lite-rpc-demo-provider</module>
         <module>lite-rpc-demo-api</module>
     </modules>
 
@@ -29,7 +29,10 @@
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
