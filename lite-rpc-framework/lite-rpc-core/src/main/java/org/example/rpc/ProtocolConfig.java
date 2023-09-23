@@ -6,6 +6,6 @@ import lombok.Value;
  * @author yelihu
  */
 @Value
-public class SerializationConfig {
-    String serializeType;
+public class ProtocolConfig {
+    String ProtocolType;
 }

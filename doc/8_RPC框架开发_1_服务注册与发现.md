@@ -66,6 +66,34 @@
 
 ## 服务端
 
+### 注册服务到Zookeeper
+
+```
+lite-rpc-metadata
+	└ providers
+		└ org.example.rpc.demo.IService1
+			└ node1 [...]
+			├ node2	[...]
+			└	node3	[...]
+  └ consumers
+		└ org.example.rpc.demo.IService1
+			└ node1 [...]
+			├ node2	[...]
+			└	node3	[...]
+  └ ....
+```
+
+
+
+由Manager来创建上面几个重要节点
+
+1. lite-rpc-metadata是一个持久节点
+2. org.example.rpc.demo.IService1 也是一个持久节点，用服务接口的全限定名作为服务的名称
+3. node1表示服务提供者，node1由/ip:port 来组成，是一个临时节点
+4. 
+
+
+
 
 
 ## 客户端
