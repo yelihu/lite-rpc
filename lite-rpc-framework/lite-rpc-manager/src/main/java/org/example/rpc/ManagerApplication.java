@@ -1,68 +1,47 @@
 package org.example.rpc;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooKeeper;
+import org.example.rpc.zookeeper.service.entity.ZNode;
+import org.example.rpc.zookeeper.service.impl.ZookeeperClusterClient;
+import org.example.rpc.zookeeper.service.ZookeeperClient;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.zookeeper.Watcher.Event.KeeperState.SyncConnected;
+import static org.example.rpc.zookeeper.ZNodePathUtils.*;
 
 /**
  * manage registry center
+ * connect with zookeeper and create initial node before start
  *
  * @author yelihu
  */
 @Slf4j
 public class ManagerApplication {
-    private static final String CONNECT_URL = "127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183";
-    private static final int SESSION_TIMEOUT = 10000;
-    /**
-     * root znode name
-     */
-    private static final String LITE_RPC_METADATA = "/lite-rpc-metadata";
+    private static final ZookeeperClient ZOOKEEPER_CLIENT;
+
+    static {
+        CountDownLatch latch = new CountDownLatch(1);
+        ZOOKEEPER_CLIENT = new ZookeeperClusterClient(getConnectSuccessWatcher(latch));
+    }
 
     /**
      * create basic node of zookeeper
      */
     public static void main(String[] args) {
-        ZooKeeper zooKeeper = null;
 
-        CountDownLatch latch = new CountDownLatch(1);
-        try {
-            zooKeeper = new ZooKeeper(CONNECT_URL, SESSION_TIMEOUT, getConnectSuccessWatcher(latch));
+        Lists.newArrayList(ZNode.createEmpty(ROOT), ZNode.createEmpty(PROVIDERS), ZNode.createEmpty(CONSUMERS))
+                .forEach(node -> ZOOKEEPER_CLIENT.createPersistentNodeNx(node, null));
 
-            zooKeeper.setData(LITE_RPC_METADATA, "".getBytes(UTF_8), -1);
-
-
-        } catch (IOException | KeeperException | InterruptedException e) {
-            log.error("connection with zookeeper occurs IOException, message={}", e.getMessage());
-            throw new RuntimeException(e);
-        } finally {
-            if (Objects.nonNull(zooKeeper)) {
-                try {
-                    zooKeeper.close();
-                } catch (InterruptedException e) {
-                    log.error("connection with zookeeper error, message={}", e.getMessage());
-                }
-            }
-        }
-
-    }
-
-    public void test(String arg2, String arg1, Object arg3) {
-
+        ZOOKEEPER_CLIENT.close();
     }
 
     private static Watcher getConnectSuccessWatcher(CountDownLatch latch) {
         return event -> {
             if (event.getState() == SyncConnected) {
-                log.info("client connected with zookeeper, connect_string={}, session_timeout={}", CONNECT_URL, SESSION_TIMEOUT);
+                log.info("client connected with zookeeper successfully");
                 latch.countDown();
             }
         };

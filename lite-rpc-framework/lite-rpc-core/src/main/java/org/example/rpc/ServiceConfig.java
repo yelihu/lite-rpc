@@ -1,6 +1,7 @@
 package org.example.rpc;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Value;
  * @author yelihu
  */
 @Builder
+@Getter
 public class ServiceConfig {
     /**
      * Service interface, implemented by {@link ServiceConfig#serviceInstance}

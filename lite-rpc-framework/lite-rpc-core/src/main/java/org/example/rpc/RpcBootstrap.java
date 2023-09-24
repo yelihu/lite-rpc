@@ -4,6 +4,10 @@ package org.example.rpc;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
+import org.example.rpc.registry.RegistryCenter;
+
+import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -28,12 +32,6 @@ public class RpcBootstrap {
      */
     private String appName;
 
-
-    /**
-     * registry center configuration, configure the registry center address and port
-     */
-    private ZookeeperClusterRegistryCenter registry;
-
     /**
      * serialization configuration
      */
@@ -44,7 +42,11 @@ public class RpcBootstrap {
      */
     private ProtocolConfig protocol;
 
-    private ServiceConfig service;
+    /**
+     * registry center configuration, configure the registry center address and port
+     */
+    private RegistryCenter registryCenter;
+
 
     public static RpcBootstrap getInstance() {
         return singletonInstance;
@@ -55,11 +57,11 @@ public class RpcBootstrap {
         return this;
     }
 
-    public RpcBootstrap registry(ZookeeperClusterRegistryCenter registry) {
+    public RpcBootstrap registry(RegistryCenter registryCenter) {
         if (log.isDebugEnabled()) {
-            log.debug("registry center config, use registry center {}", registry);
+            log.debug("registry center config, use registry center {}", registryCenter.getClass().getSimpleName());
         }
-        this.registry = registry;
+        this.registryCenter = registryCenter;
         return this;
     }
 
@@ -94,19 +96,36 @@ public class RpcBootstrap {
      * @return {@link RpcBootstrap}
      */
     public RpcBootstrap publish(ServiceConfig serviceConfig) {
-        if (log.isDebugEnabled()) {
-            log.debug("publish service config, use service config {}", serviceConfig);
+        //check RpcBootstrap's attributes null
+        if (ObjectUtils.anyNull(this.appName, this.registryCenter, this.serialize, this.protocol, serviceConfig)) {
+            throw new IllegalArgumentException("RpcBootstrap's attributes can not be null,check configuration before publish");
         }
-        this.service = serviceConfig;
+        registryCenter.register(serviceConfig);
         return this;
     }
+
+
+    public RpcBootstrap publish(List<ServiceConfig> serviceConfig) {
+        serviceConfig.forEach(this::publish);
+        return this;
+    }
+
 
     /**
      * start this bootstrap
      */
     public void start() {
-
-
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                registryCenter.close();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
