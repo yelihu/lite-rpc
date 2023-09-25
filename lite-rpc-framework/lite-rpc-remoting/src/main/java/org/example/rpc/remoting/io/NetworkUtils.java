@@ -1,7 +1,7 @@
-package org.example.rpc.io;
+package org.example.rpc.remoting.io;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.rpc.exceptions.NetworkException;
+import org.example.rpc.remoting.exceptions.NetworkException;
 
 import java.net.Inet6Address;
 import java.net.InetAddress;

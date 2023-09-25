@@ -1,7 +1,6 @@
-package org.example.rpc.zookeeper.service.entity;
+package org.example.rpc.remoting.zookeeper.service.entity;
 
 import lombok.Getter;
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * @author yelihu

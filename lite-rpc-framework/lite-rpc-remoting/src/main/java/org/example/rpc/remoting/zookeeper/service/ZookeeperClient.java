@@ -1,8 +1,8 @@
-package org.example.rpc.zookeeper.service;
+package org.example.rpc.remoting.zookeeper.service;
 
 import org.apache.zookeeper.Watcher;
-import org.example.rpc.exceptions.ZookeeperException;
-import org.example.rpc.zookeeper.service.entity.ZNode;
+import org.example.rpc.remoting.exceptions.ZookeeperException;
+import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
 
 /**
  * @author yelihu

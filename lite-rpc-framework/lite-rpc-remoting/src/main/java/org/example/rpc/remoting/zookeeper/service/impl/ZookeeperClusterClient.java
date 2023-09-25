@@ -1,4 +1,4 @@
-package org.example.rpc.zookeeper.service.impl;
+package org.example.rpc.remoting.zookeeper.service.impl;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +8,9 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 import org.example.rpc.dev.ForTestingOnly;
-import org.example.rpc.exceptions.ZookeeperException;
-import org.example.rpc.zookeeper.service.ZookeeperClient;
-import org.example.rpc.zookeeper.service.entity.ZNode;
+import org.example.rpc.remoting.exceptions.ZookeeperException;
+import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
+import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
 
 import java.io.IOException;
 import java.util.Objects;

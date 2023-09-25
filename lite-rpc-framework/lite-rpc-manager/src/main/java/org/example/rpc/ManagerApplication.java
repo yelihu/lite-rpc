@@ -3,14 +3,14 @@ package org.example.rpc;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.Watcher;
-import org.example.rpc.zookeeper.service.entity.ZNode;
-import org.example.rpc.zookeeper.service.impl.ZookeeperClusterClient;
-import org.example.rpc.zookeeper.service.ZookeeperClient;
+import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
+import org.example.rpc.remoting.zookeeper.service.impl.ZookeeperClusterClient;
+import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
 
 import java.util.concurrent.CountDownLatch;
 
 import static org.apache.zookeeper.Watcher.Event.KeeperState.SyncConnected;
-import static org.example.rpc.zookeeper.ZNodePathUtils.*;
+import static org.example.rpc.remoting.zookeeper.ZNodePathUtils.*;
 
 /**
  * manage registry center

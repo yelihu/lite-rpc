@@ -1,4 +1,4 @@
-package org.example.rpc.zookeeper;
+package org.example.rpc.remoting.zookeeper;
 
 /**
  * @author yelihu
