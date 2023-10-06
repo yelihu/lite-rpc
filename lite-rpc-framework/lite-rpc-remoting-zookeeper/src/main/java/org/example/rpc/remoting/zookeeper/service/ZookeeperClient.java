@@ -1,8 +1,10 @@
 package org.example.rpc.remoting.zookeeper.service;
 
 import org.apache.zookeeper.Watcher;
-import org.example.rpc.remoting.exceptions.ZookeeperException;
+import org.example.rpc.remoting.zookeeper.exceptions.ZookeeperException;
 import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
+
+import java.util.List;
 
 /**
  * @author yelihu
@@ -35,8 +37,11 @@ public interface ZookeeperClient {
      */
     Boolean checkNodeExists(ZNode node, Watcher watcher) throws ZookeeperException;
 
+    List<String> getChildren(ZNode node, Watcher watcher);
+
     /**
      * close zookeeper client
      */
     void close();
+
 }

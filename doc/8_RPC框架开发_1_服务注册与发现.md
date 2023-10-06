@@ -1,5 +1,9 @@
 # RPC服务开发：服务注册与发现
 
+[toc]
+
+---
+
 1. 为什么需要服务注册与发现？注册中心、调用方和提供方三者之间的关系是什么
 2. 服务调用方和服务提供方之间调用的契约是什么？
 3. 服务订阅从注册中心哪里得到的是什么数据？
@@ -158,7 +162,7 @@ public RpcBootstrap publish(ServiceConfig serviceConfig) {
 
 在上面代码当中，RegistryCenter接口实际上是子类ZookeeperRegistryCenter，类的实现关系如下：
 
-<img src="assets/image-20230924195851045.png" alt="image-20230924195851045" style="zoom:33%;" />
+<img src="assets/image-20230924195851045.png" alt="image-20230924195851045" style="zoom: 33%;" />
 
 ZookeeperRegistryCenter内部的ZookeeperRegistryCenter#register(ServiceConfig serviceConfig) 完成的服务注册动作，先不看代码实现，先设计因该如何存储整个框架当中Consumer和Provider的机器信息和服务信息因该如何存储？
 
@@ -228,6 +232,20 @@ public class ZookeeperRegistryCenter extends AbstractRegistryCenter {
 
 
 
+## 999.  总结
+
+1. 服务注册和发现是为了想要实现RPC调用的消费方能够借助一个类似114电话一样的中介，找到可用的服务提供方，服务提供方在分布式集群里面可能是多个并且时刻存在上下线的变化的可能性的，注册中心需要完成管理服务的注册和下线来帮助消费方找到提供方。
+2. 整个架构的角色包含Registry Center、Provider和Consumer，因为需要Provider先将服务和Provider机器的IP&Port注册到Registry Center上，所以我们的实现顺序也是Provider → Registry Center → Consumer。
+3. 工程分module方面，分为demo工程和framework工程，framework工程最为核心，包含rpc框架最基本的、实现组件Registry Center、Provider和Consumer需要的代码实现。demo工程主要参照dubbo里面quickstart里面的样例，帮助串联服务发布的流程和起到测试代码的作用。
+
+
+
+
+
+
+
+
+
 ## A. 附录
 
 ### A.1 RegistryCenterFactory
@@ -239,12 +257,9 @@ public class ZookeeperRegistryCenter extends AbstractRegistryCenter {
 @Slf4j
 @Accessors(chain = true)
 public class RegistryCenterFactory {
-
     @Getter
     private String connectString;
-
     private int sessionTimeout;
-
     public RegistryCenter getRegistryCenter() {
         String[] split = getConnectString().split("://");
         if (split.length != 2) {

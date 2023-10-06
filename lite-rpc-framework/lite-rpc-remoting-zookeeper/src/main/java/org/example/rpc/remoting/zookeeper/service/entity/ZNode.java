@@ -25,4 +25,7 @@ public class ZNode {
     public static ZNode createEmpty(String path) {
         return new ZNode(path, null);
     }
+    public static ZNode of(String path) {
+        return new ZNode(path, null);
+    }
 }

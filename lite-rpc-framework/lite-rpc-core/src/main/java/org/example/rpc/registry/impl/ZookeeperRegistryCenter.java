@@ -1,12 +1,21 @@
 package org.example.rpc.registry.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.tuple.Pair;
+
 import org.example.rpc.ServiceConfig;
-import org.example.rpc.remoting.io.NetworkUtils;
 import org.example.rpc.registry.AbstractRegistryCenter;
+import org.example.rpc.remoting.zookeeper.IPAndPortUtils;
+
 import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
+import org.example.rpc.remoting.zookeeper.service.entity.IPAndPort;
 import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
 import org.example.rpc.remoting.zookeeper.service.impl.ZookeeperClusterClient;
+import org.example.rpc.utils.NetworkUtils;
+
+
+import java.util.List;
 
 import static org.example.rpc.remoting.zookeeper.ZNodePathUtils.getProviderServiceNodePath;
 import static org.example.rpc.remoting.zookeeper.ZNodePathUtils.getProviderServicePath;
@@ -18,9 +27,11 @@ import static org.example.rpc.remoting.zookeeper.ZNodePathUtils.getProviderServi
 public class ZookeeperRegistryCenter extends AbstractRegistryCenter {
     private static final int PORT_8088 = 8088;
     private final ZookeeperClient zookeeperClient;
+
     public ZookeeperRegistryCenter(String connectionString, int sessionTimeout) {
         this.zookeeperClient = new ZookeeperClusterClient(connectionString, sessionTimeout, null);
     }
+
     @Override
     public void register(ServiceConfig serviceConfig) {
         if (log.isDebugEnabled()) {
@@ -38,6 +49,22 @@ public class ZookeeperRegistryCenter extends AbstractRegistryCenter {
         ZNode serviceProviderNode = ZNode.createEmpty(thisProviderNodePath);
         zookeeperClient.createEphemeralNodeNx(serviceProviderNode);
     }
+
+    @Override
+    public IPAndPort lookUp(String serviceInterfaceName) {
+        String providerServicePath = getProviderServicePath(serviceInterfaceName);
+        List<String> childrenNodes = zookeeperClient.getChildren(ZNode.of(providerServicePath), null);
+        if (CollectionUtils.isEmpty(childrenNodes)) {
+            log.error("can not find service node, service interface name is {}", serviceInterfaceName);
+            return null;
+        }
+        return childrenNodes.stream()
+                .map(ipStr -> {
+                    Pair<String, Integer> ipAndPortPair = IPAndPortUtils.split(ipStr);
+                    return new IPAndPort(ipAndPortPair.getKey(), ipAndPortPair.getValue());
+                }).findFirst().orElse(null);
+    }
+
     @Override
     public void close() {
         zookeeperClient.close();

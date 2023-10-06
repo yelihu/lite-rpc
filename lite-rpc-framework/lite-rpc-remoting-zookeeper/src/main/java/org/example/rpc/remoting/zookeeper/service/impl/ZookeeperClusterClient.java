@@ -7,12 +7,12 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
-import org.example.rpc.dev.ForTestingOnly;
-import org.example.rpc.remoting.exceptions.ZookeeperException;
+import org.example.rpc.remoting.zookeeper.exceptions.ZookeeperException;
 import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
 import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import static org.apache.zookeeper.ZooDefs.Ids.OPEN_ACL_UNSAFE;
@@ -25,7 +25,6 @@ import static org.apache.zookeeper.ZooDefs.Ids.OPEN_ACL_UNSAFE;
 @Slf4j
 @Getter
 public class ZookeeperClusterClient implements ZookeeperClient {
-    @ForTestingOnly
     public static final String TEST_LOCAL_ZOOKEEPER_CLUSTER_CONNECT_URL = "127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183";
 
     private static final int SESSION_TIMEOUT = 10000;
@@ -125,6 +124,16 @@ public class ZookeeperClusterClient implements ZookeeperClient {
     }
 
     @Override
+    public List<String> getChildren(ZNode node, Watcher watcher) {
+        try {
+            return zooKeeper.getChildren(node.getPath(), watcher);
+        } catch (KeeperException | InterruptedException e) {
+            log.error("get znode children error, message={}", e.getMessage());
+            throw new ZookeeperException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public void close() {
         try {
             zooKeeper.close();
@@ -133,5 +142,6 @@ public class ZookeeperClusterClient implements ZookeeperClient {
             throw new ZookeeperException(e.getMessage(), e);
         }
     }
+
 
 }

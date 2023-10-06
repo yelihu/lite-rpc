@@ -1,15 +1,17 @@
 package org.example.rpc;
 
 
+import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.example.rpc.registry.RegistryCenter;
 
 import java.util.List;
+import java.util.Map;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.ObjectUtils.anyNull;
 
 
 /**
@@ -46,6 +48,9 @@ public class RpcBootstrap {
      * registry center configuration, configure the registry center address and port
      */
     private RegistryCenter registryCenter;
+
+    //service map, store the service reference which is published, key is service class name.
+    private static final Map<String, ServiceConfig> publishedServiceMap = Maps.newConcurrentMap();
 
 
     public static RpcBootstrap getInstance() {
@@ -86,6 +91,8 @@ public class RpcBootstrap {
      */
     public RpcBootstrap reference(ProxyReference<?> reference) {
 
+        reference.setRegistryCenter(registryCenter);
+        // TODO::
         return this;
     }
 
@@ -97,9 +104,12 @@ public class RpcBootstrap {
      */
     public RpcBootstrap publish(ServiceConfig serviceConfig) {
         //check RpcBootstrap's attributes null
-        if (ObjectUtils.anyNull(this.appName, this.registryCenter, this.serialize, this.protocol, serviceConfig)) {
+        if (anyNull(this.appName, this.registryCenter, this.serialize, this.protocol, serviceConfig)) {
             throw new IllegalArgumentException("RpcBootstrap's attributes can not be null,check configuration before publish");
         }
+        //
+        publishedServiceMap.put(serviceConfig.getRegistryKey(), serviceConfig);
+
         registryCenter.register(serviceConfig);
         return this;
     }
@@ -116,14 +126,14 @@ public class RpcBootstrap {
      */
     public void start() {
         try {
-            Thread.sleep(30000);
+            Thread.sleep(3000 * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             try {
                 registryCenter.close();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                log.error("registry center close error", e);
             }
         }
     }

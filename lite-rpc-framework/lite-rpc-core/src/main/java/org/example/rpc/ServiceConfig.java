@@ -24,4 +24,12 @@ public class ServiceConfig {
         return "ServiceConfig{" +
                 "interface=" + serviceInterface.getName() + '}';
     }
+
+    private String getInterfaceName() {
+        return serviceInterface.getName();
+    }
+
+    public String getRegistryKey() {
+        return this.getInterfaceName();
+    }
 }

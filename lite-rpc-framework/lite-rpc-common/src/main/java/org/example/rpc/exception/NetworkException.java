@@ -1,4 +1,4 @@
-package org.example.rpc.remoting.exceptions;
+package org.example.rpc.exception;
 
 /**
  * define the exception of network exception

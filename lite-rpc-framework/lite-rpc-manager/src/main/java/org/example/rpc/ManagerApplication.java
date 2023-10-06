@@ -1,16 +1,13 @@
 package org.example.rpc;
 
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.Watcher;
-import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
-import org.example.rpc.remoting.zookeeper.service.impl.ZookeeperClusterClient;
 import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
+import org.example.rpc.remoting.zookeeper.service.impl.ZookeeperClusterClient;
 
 import java.util.concurrent.CountDownLatch;
 
 import static org.apache.zookeeper.Watcher.Event.KeeperState.SyncConnected;
-import static org.example.rpc.remoting.zookeeper.ZNodePathUtils.*;
 
 /**
  * manage registry center
@@ -27,16 +24,16 @@ public class ManagerApplication {
         ZOOKEEPER_CLIENT = new ZookeeperClusterClient(getConnectSuccessWatcher(latch));
     }
 
-    /**
-     * create basic node of zookeeper
-     */
-    public static void main(String[] args) {
-
-        Lists.newArrayList(ZNode.createEmpty(ROOT), ZNode.createEmpty(PROVIDERS), ZNode.createEmpty(CONSUMERS))
-                .forEach(node -> ZOOKEEPER_CLIENT.createPersistentNodeNx(node, null));
-
-        ZOOKEEPER_CLIENT.close();
-    }
+    ///**
+    // * create basic node of zookeeper
+    // */
+    //public static void main(String[] args) {
+    //
+    //    Lists.newArrayList(ZNode.createEmpty(ROOT), ZNode.createEmpty(PROVIDERS), ZNode.createEmpty(CONSUMERS))
+    //            .forEach(node -> ZOOKEEPER_CLIENT.createPersistentNodeNx(node, null));
+    //
+    //    ZOOKEEPER_CLIENT.close();
+    //}
 
     private static Watcher getConnectSuccessWatcher(CountDownLatch latch) {
         return event -> {
