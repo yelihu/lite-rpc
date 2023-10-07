@@ -7,7 +7,7 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
-import org.example.rpc.remoting.zookeeper.exceptions.ZookeeperException;
+import org.example.rpc.remoting.zookeeper.exception.ZookeeperException;
 import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
 import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
 

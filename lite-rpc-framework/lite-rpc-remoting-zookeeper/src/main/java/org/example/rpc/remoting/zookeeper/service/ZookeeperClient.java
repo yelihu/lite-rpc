@@ -1,7 +1,7 @@
 package org.example.rpc.remoting.zookeeper.service;
 
 import org.apache.zookeeper.Watcher;
-import org.example.rpc.remoting.zookeeper.exceptions.ZookeeperException;
+import org.example.rpc.remoting.zookeeper.exception.ZookeeperException;
 import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
 
 import java.util.List;

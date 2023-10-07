@@ -1,6 +1,8 @@
 package org.example.rpc.registry.exception;
 
 /**
+ * define the exception of registry center not found exception
+ *
  * @author yelihu
  */
 public class RegistryCenterNotFoundException extends RuntimeException {

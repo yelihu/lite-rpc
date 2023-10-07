@@ -1,6 +1,8 @@
 package org.example.rpc.registry.exception;
 
 /**
+ * define the exception of provider
+ *
  * @author yelihu
  */
 public class ProviderException extends RuntimeException {

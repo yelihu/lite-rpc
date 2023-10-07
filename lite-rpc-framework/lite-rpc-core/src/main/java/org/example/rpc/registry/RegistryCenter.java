@@ -1,7 +1,7 @@
 package org.example.rpc.registry;
 
 import org.example.rpc.ServiceConfig;
-import org.example.rpc.remoting.zookeeper.service.entity.IPAndPort;
+import org.example.rpc.entity.IPAndPort;
 
 /**
  * @author yelihu

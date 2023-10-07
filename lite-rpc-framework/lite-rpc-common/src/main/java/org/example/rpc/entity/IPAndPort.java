@@ -1,4 +1,4 @@
-package org.example.rpc.remoting.zookeeper.service.entity;
+package org.example.rpc.entity;
 
 import lombok.Value;
 

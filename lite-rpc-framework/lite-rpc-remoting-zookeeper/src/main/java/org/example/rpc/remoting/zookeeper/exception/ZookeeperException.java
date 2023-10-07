@@ -1,4 +1,4 @@
-package org.example.rpc.remoting.zookeeper.exceptions;
+package org.example.rpc.remoting.zookeeper.exception;
 
 /**
  * @author yelihu
