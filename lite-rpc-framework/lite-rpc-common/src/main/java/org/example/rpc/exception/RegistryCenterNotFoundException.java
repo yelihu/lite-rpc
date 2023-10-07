@@ -1,4 +1,4 @@
-package org.example.rpc.registry.exception;
+package org.example.rpc.exception;
 
 /**
  * define the exception of registry center not found exception

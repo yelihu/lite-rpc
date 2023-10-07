@@ -9,4 +9,12 @@ import lombok.Value;
 public class IPAndPort {
     String ip;
     int port;
+
+    @Override
+    public String toString() {
+        return "IPAndPort{" +
+                "'" + ip + '\'' +
+                ":" + port +
+                '}';
+    }
 }

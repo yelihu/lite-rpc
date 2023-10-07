@@ -1,8 +1,7 @@
-package org.example.rpc;
+package org.example.rpc.entity.config;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Value;
 
 /**
  * configuration of service, which is used to register service to RPC server

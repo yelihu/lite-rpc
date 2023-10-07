@@ -1,10 +1,13 @@
-package org.example.rpc;
+package org.example.rpc.registry.bootstrap;
 
 
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.rpc.entity.config.ProtocolConfig;
+import org.example.rpc.entity.config.SerializationConfig;
+import org.example.rpc.entity.config.ServiceConfig;
 import org.example.rpc.registry.RegistryCenter;
 
 import java.util.List;
@@ -16,6 +19,7 @@ import static org.apache.commons.lang3.ObjectUtils.anyNull;
 
 /**
  * provider bootstrap, which is used to initialize the provider service
+ * 启动一个客户端，作为provider上报服务消息或者作为consumer查询服务provider信息。
  *
  * @author yelihu
  */
@@ -90,9 +94,8 @@ public class RpcBootstrap {
      * @return {@link RpcBootstrap}
      */
     public RpcBootstrap reference(ProxyReference<?> reference) {
-
-        reference.setRegistryCenter(registryCenter);
-        // TODO::
+        // setting registry center to proxy reference
+        reference.setRegistryCenter(this.registryCenter);
         return this;
     }
 

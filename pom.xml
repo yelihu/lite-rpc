@@ -14,9 +14,9 @@
         <module>lite-rpc-framework</module>
         <module>lite-rpc-framework/lite-rpc-common</module>
         <module>lite-rpc-framework/lite-rpc-core</module>
-        <module>lite-rpc-registry</module>
+        <module>lite-rpc-framework/lite-rpc-registry</module>
         <module>lite-rpc-framework/lite-rpc-manager</module>
-        <module>lite-rpc-framework/lite-rpc-remoting-zookeeper</module>
+        <module>lite-rpc-framework/lite-rpc-remoting</module>
     </modules>
 
     <properties>

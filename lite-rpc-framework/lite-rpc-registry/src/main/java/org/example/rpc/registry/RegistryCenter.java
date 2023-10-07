@@ -1,16 +1,15 @@
 package org.example.rpc.registry;
 
-import org.example.rpc.ServiceConfig;
 import org.example.rpc.entity.IPAndPort;
+import org.example.rpc.entity.config.ServiceConfig;
 
 /**
  * @author yelihu
  */
-public interface RegistryCenter extends AutoCloseable{
+public interface RegistryCenter extends AutoCloseable {
 
 
     /**
-     * register a service to registry center
      * register a service to registry center
      *
      * @param serviceConfig Service Configuration
@@ -18,11 +17,11 @@ public interface RegistryCenter extends AutoCloseable{
     void register(ServiceConfig serviceConfig);
 
     /**
-     * get a available service
+     * get a available provider service node from registry center
      *
-     * @param name 名字
+     * @param name provider service interface class name
      * @return {@link IPAndPort}
      */
-    IPAndPort lookUp(String name);
+    IPAndPort lookup(String name);
 
 }

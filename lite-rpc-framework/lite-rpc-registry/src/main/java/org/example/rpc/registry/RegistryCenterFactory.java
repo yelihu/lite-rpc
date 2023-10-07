@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-import org.example.rpc.registry.exception.RegistryCenterNotFoundException;
+import org.example.rpc.exception.RegistryCenterNotFoundException;
 import org.example.rpc.registry.impl.ZookeeperRegistryCenter;
 
 /**

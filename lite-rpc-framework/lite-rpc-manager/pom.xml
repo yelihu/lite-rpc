@@ -48,7 +48,7 @@
 
         <dependency>
             <groupId>org.example.rpc.remoting</groupId>
-            <artifactId>lite-rpc-remoting-zookeeper</artifactId>
+            <artifactId>lite-rpc-remoting</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

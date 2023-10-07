@@ -1,4 +1,4 @@
-package org.example.rpc;
+package org.example.rpc.entity.config;
 
 import lombok.Value;
 

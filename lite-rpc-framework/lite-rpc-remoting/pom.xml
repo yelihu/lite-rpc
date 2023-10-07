@@ -9,10 +9,10 @@
     </parent>
 
     <groupId>org.example.rpc.remoting</groupId>
-    <artifactId>lite-rpc-remoting-zookeeper</artifactId>
+    <artifactId>lite-rpc-remoting</artifactId>
     <packaging>jar</packaging>
 
-    <name>lite-rpc-remoting-zookeeper</name>
+    <name>lite-rpc-remoting</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -28,6 +28,7 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.example.rpc</groupId>
             <artifactId>lite-rpc-common</artifactId>

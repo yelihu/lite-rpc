@@ -3,17 +3,15 @@ package org.example.rpc.registry.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
-
-import org.example.rpc.ServiceConfig;
-import org.example.rpc.registry.AbstractRegistryCenter;
-import org.example.rpc.utils.network.IPAndPortUtils;
-
-import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
 import org.example.rpc.entity.IPAndPort;
+import org.example.rpc.entity.config.ServiceConfig;
+import org.example.rpc.exception.ProviderException;
+import org.example.rpc.registry.AbstractRegistryCenter;
+import org.example.rpc.remoting.zookeeper.service.ZookeeperClient;
 import org.example.rpc.remoting.zookeeper.service.entity.ZNode;
 import org.example.rpc.remoting.zookeeper.service.impl.ZookeeperClusterClient;
+import org.example.rpc.utils.network.IPAndPortUtils;
 import org.example.rpc.utils.network.NetworkUtils;
-
 
 import java.util.List;
 
@@ -51,18 +49,22 @@ public class ZookeeperRegistryCenter extends AbstractRegistryCenter {
     }
 
     @Override
-    public IPAndPort lookUp(String serviceInterfaceName) {
+    public IPAndPort lookup(String serviceInterfaceName) {
         String providerServicePath = getProviderServicePath(serviceInterfaceName);
+        //get all provider service node values(ip:port) by parent path TODO:: 缓存服务列表到一个map容器里面
         List<String> childrenNodes = zookeeperClient.getChildren(ZNode.of(providerServicePath), null);
         if (CollectionUtils.isEmpty(childrenNodes)) {
             log.error("can not find service node, service interface name is {}", serviceInterfaceName);
-            return null;
+            throw ProviderException.createProviderServiceNotFound(serviceInterfaceName);
         }
         return childrenNodes.stream()
                 .map(ipStr -> {
                     Pair<String, Integer> ipAndPortPair = IPAndPortUtils.split(ipStr);
                     return new IPAndPort(ipAndPortPair.getKey(), ipAndPortPair.getValue());
-                }).findFirst().orElse(null);
+                })
+                // TODO: 2023/10/7 需要按照load balance策略(随机、一致性hash、round robin) 选择可用服务
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

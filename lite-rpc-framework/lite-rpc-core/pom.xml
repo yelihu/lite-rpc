@@ -30,7 +30,19 @@
 
         <dependency>
             <groupId>org.example.rpc.remoting</groupId>
-            <artifactId>lite-rpc-remoting-zookeeper</artifactId>
+            <artifactId>lite-rpc-remoting</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.example.rpc</groupId>
+            <artifactId>lite-rpc-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.example.rpc.registry</groupId>
+            <artifactId>lite-rpc-registry</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

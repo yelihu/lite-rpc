@@ -1,7 +1,7 @@
 package org.example.rpc.demo;
 
-import org.example.rpc.ProxyReference;
-import org.example.rpc.RpcBootstrap;
+import org.example.rpc.registry.bootstrap.ProxyReference;
+import org.example.rpc.registry.bootstrap.RpcBootstrap;
 import org.example.rpc.registry.RegistryCenterFactory;
 
 /**

@@ -1,9 +1,12 @@
 package org.example.rpc.demo;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.rpc.*;
 import org.example.rpc.demo.service.impl.HelloLiteRpcServiceImpl;
+import org.example.rpc.entity.config.ProtocolConfig;
 import org.example.rpc.registry.RegistryCenterFactory;
+import org.example.rpc.registry.bootstrap.RpcBootstrap;
+import org.example.rpc.entity.config.SerializationConfig;
+import org.example.rpc.entity.config.ServiceConfig;
 
 /**
  * @author yelihu

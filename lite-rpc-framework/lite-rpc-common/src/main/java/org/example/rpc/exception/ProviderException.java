@@ -1,4 +1,4 @@
-package org.example.rpc.registry.exception;
+package org.example.rpc.exception;
 
 /**
  * define the exception of provider
@@ -25,8 +25,8 @@ public class ProviderException extends RuntimeException {
         return new ProviderException(message);
     }
 
-    public static ProviderException createProviderServiceNotFound(String message) {
-        return new ProviderException(PROVIDER_SERVICE_NOT_FOUND, message);
+    public static ProviderException createProviderServiceNotFound(String interfaceClassName) {
+        return new ProviderException(PROVIDER_SERVICE_NOT_FOUND, interfaceClassName + " Provider not found!");
     }
 
     public ProviderException(String message, Throwable cause) {
