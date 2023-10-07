@@ -20,28 +20,7 @@ Lite-RPC框架整体采用CS架构，整体架构包含如下组件：
 * 负载均衡层：
 * 远程代理层：
 
-### 客户端架构
-
-客户端包含如下组件：
-
-* 远程代理
-* 序列化器
-* 负载均衡器
-* 通讯模块
-
-### 服务端架构
-
-服务端包含如下组件：
-
-1. 远程调用处理器
-2. 序列化器
-3. 通信模块
-
-### 注册中心架构
-
-服务注册和发现，负责记录和管理可用的服务节点信息，包含服务名称、地址、权重...客户端和服务端都可以通过注册中心来发现和注册服务。
-
-### 框架工作流程
+### 架构
 
 
 ### 扩展性和可靠性
@@ -78,6 +57,8 @@ Lite-RPC项目主要包含以下模块和文件：
 * [4_Zookeeper基本概念.md](doc%2F4_Zookeeper%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.md)
 * [5_在Mac环境的docker安装ZooKeeper.md](doc%2F5_%E5%9C%A8Mac%E7%8E%AF%E5%A2%83%E7%9A%84docker%E5%AE%89%E8%A3%85ZooKeeper.md)
 * [6_使用Docker在Mac上搭建Zookeeper集群.md](doc%2F6_%E4%BD%BF%E7%94%A8Docker%E5%9C%A8Mac%E4%B8%8A%E6%90%AD%E5%BB%BAZookeeper%E9%9B%86%E7%BE%A4.md)
+* [7_CAP理论和它的朋友们.md](doc%2F7_CAP%E7%90%86%E8%AE%BA%E5%92%8C%E5%AE%83%E7%9A%84%E6%9C%8B%E5%8F%8B%E4%BB%AC.md)
+* [8_RPC框架开发_1_服务注册与发现.md](doc%2F8_RPC%E6%A1%86%E6%9E%B6%E5%BC%80%E5%8F%91_1_%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0.md)
 
 ### 用户手册
 
