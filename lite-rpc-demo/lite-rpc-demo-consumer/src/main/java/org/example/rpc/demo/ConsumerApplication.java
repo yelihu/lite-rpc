@@ -18,7 +18,6 @@ public class ConsumerApplication {
                         .setConnectString("zookeeper://127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183")
                         .setSessionTimeout(10000)
                         .getRegistryCenter())
-                //
                 .reference(reference);
 
         IHelloLiteRpc helloLiteRpc = reference.get();

@@ -2,6 +2,13 @@ package org.example.rpc.registry.bootstrap;
 
 
 import com.google.common.collect.Maps;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +16,12 @@ import org.example.rpc.entity.config.ProtocolConfig;
 import org.example.rpc.entity.config.SerializationConfig;
 import org.example.rpc.entity.config.ServiceConfig;
 import org.example.rpc.registry.RegistryCenter;
+import org.example.rpc.remoting.utils.PortConst;
 
+import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.ObjectUtils.anyNull;
@@ -57,6 +67,12 @@ public class RpcBootstrap {
     private static final Map<String, ServiceConfig> publishedServiceMap = Maps.newConcurrentMap();
 
 
+    /**
+     * cache netty channel, avoid create new channel every time before consume
+     */
+    public static final Map<InetSocketAddress, Channel> CHANNEL_CACHE = Maps.newConcurrentMap();
+
+
     public static RpcBootstrap getInstance() {
         return singletonInstance;
     }
@@ -94,6 +110,9 @@ public class RpcBootstrap {
      * @return {@link RpcBootstrap}
      */
     public RpcBootstrap reference(ProxyReference<?> reference) {
+        if (Objects.isNull(this.registryCenter)) {
+            throw new IllegalArgumentException("RpcBootstrap's registryCenter can not be null,check configuration before reference");
+        }
         // setting registry center to proxy reference
         reference.setRegistryCenter(this.registryCenter);
         return this;
@@ -110,7 +129,7 @@ public class RpcBootstrap {
         if (anyNull(this.appName, this.registryCenter, this.serialize, this.protocol, serviceConfig)) {
             throw new IllegalArgumentException("RpcBootstrap's attributes can not be null,check configuration before publish");
         }
-        //
+
         publishedServiceMap.put(serviceConfig.getRegistryKey(), serviceConfig);
 
         registryCenter.register(serviceConfig);
@@ -128,17 +147,43 @@ public class RpcBootstrap {
      * start this bootstrap
      */
     public void start() {
+        //bootstrap a netty server
+        this.serverStart();
+    }
+
+
+    public void serverStart() {
+        NioEventLoopGroup bossEventLoopGroup = new NioEventLoopGroup(2);
+        NioEventLoopGroup workerEventLoopGroup = new NioEventLoopGroup(10);
         try {
-            Thread.sleep(3000 * 1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(bossEventLoopGroup, workerEventLoopGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel ch) {
+                            // TODO: 2023/10/7 define channel handlers for netty server, process inbound message and outbound message
+                            ch.pipeline().addLast(null);
+                        }
+                    });
+
+            log.info("netty server started!");
+            //bind server port 8080
+            ChannelFuture channelFuture = serverBootstrap.bind(PortConst._8080).sync();
+
+            //wait for server channel close
+            channelFuture.channel().closeFuture().sync();
+        } catch (Exception e) {
+            log.error("netty server start error", e);
+            //e.printStackTrace();
         } finally {
-            try {
-                registryCenter.close();
-            } catch (Exception e) {
-                log.error("registry center close error", e);
-            }
+            //优雅退出
+            bossEventLoopGroup.shutdownGracefully();
+            workerEventLoopGroup.shutdownGracefully();
+            log.info("netty server terminated!");
         }
+
     }
 
 

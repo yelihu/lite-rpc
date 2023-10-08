@@ -57,7 +57,7 @@ public class ZookeeperRegistryCenter extends AbstractRegistryCenter {
             log.error("can not find service node, service interface name is {}", serviceInterfaceName);
             throw ProviderException.createProviderServiceNotFound(serviceInterfaceName);
         }
-        return childrenNodes.stream()
+        IPAndPort ipAndPort = childrenNodes.stream()
                 .map(ipStr -> {
                     Pair<String, Integer> ipAndPortPair = IPAndPortUtils.split(ipStr);
                     return new IPAndPort(ipAndPortPair.getKey(), ipAndPortPair.getValue());
@@ -65,6 +65,10 @@ public class ZookeeperRegistryCenter extends AbstractRegistryCenter {
                 // TODO: 2023/10/7 需要按照load balance策略(随机、一致性hash、round robin) 选择可用服务
                 .findFirst()
                 .orElse(null);
+        if (log.isDebugEnabled()) {
+            log.debug("serviceInterfaceName = {}, ipAndPort = {}", serviceInterfaceName, ipAndPort);
+        }
+        return ipAndPort;
     }
 
     @Override
